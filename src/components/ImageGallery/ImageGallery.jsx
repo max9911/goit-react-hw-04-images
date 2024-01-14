@@ -7,6 +7,7 @@ import css from './ImageGallery.module.css';
 import ModalW from 'components/Modal/modal';
 
 const ImageGallery = ({ word }) => {
+  const [wordS, setWordS] = useState('');
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,35 +16,35 @@ const ImageGallery = ({ word }) => {
   const [bntShow, setBtnShow] = useState(true);
   const [totalHits, setTotalHits] = useState(null);
 
-  const getGal = async (word, page) => {
-    try {
-      console.log(page);
-      setLoading(true);
-      setBtnShow(false);
-
-      const resp = await getPics(word, page);
-
-      const obj = resp.data.hits;
-      setTotalHits(resp.data.totalHits);
-      setData(prev => [...prev, ...obj]);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-      setBtnShow(true);
-    }
-  };
   useEffect(() => {
-    // console.log('useef1');
     setPage(1);
     setData([]);
-    word && getGal(word, page);
+    setWordS(word);
+    console.log('useef1');
   }, [word]);
 
   useEffect(() => {
-    // console.log('useef2');
-    word && getGal(word, page);
-  }, [page]);
+    const getGal = async () => {
+      try {
+        console.log(page);
+        setLoading(true);
+        setBtnShow(false);
+
+        const resp = await getPics(wordS, page);
+
+        const obj = resp.data.hits;
+        setTotalHits(resp.data.totalHits);
+        setData(prev => [...prev, ...obj]);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+        setBtnShow(true);
+      }
+    };
+    console.log('useef2');
+    wordS && getGal();
+  }, [page, wordS]);
 
   const btnClick = () => {
     setPage(prev => prev + 1);
