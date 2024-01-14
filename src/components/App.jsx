@@ -5,7 +5,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 
 class App extends Component {
   state = {
-    search: '',
+    search: '111',
   };
 
   onSubmit = word => {
