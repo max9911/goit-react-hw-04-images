@@ -1,25 +1,21 @@
 import css from './App.module.css';
 import Searchbar from './Searchbar/Searchbar';
-import { Component } from 'react';
 import ImageGallery from './ImageGallery/ImageGallery';
+import { useState } from 'react';
 
-class App extends Component {
-  state = {
-    search: '111',
+const App = () => {
+  const [search, setSearch] = useState('');
+
+  const onSubmit = word => {
+    setSearch(word);
   };
 
-  onSubmit = word => {
-    this.setState({
-      search: word,
-    });
-  };
-  render() {
-    return (
-      <div className={css.App}>
-        <Searchbar onSubmit={this.onSubmit} />
-        <ImageGallery word={this.state.search} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className={css.App}>
+      <Searchbar onSubmit={onSubmit} />
+      <ImageGallery word={search} />
+    </div>
+  );
+};
+
 export default App;

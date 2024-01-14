@@ -1,21 +1,20 @@
 import css from './modal.module.css';
-import { Component } from 'react';
+import { useEffect } from 'react';
 
-export default class ModalW extends Component {
-  componentDidMount() {
-    document.addEventListener('keydown', this.props.closeW);
-  }
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.props.closeW);
-  }
+const ModalW = ({ closeW, url }) => {
+  useEffect(() => {
+    document.addEventListener('keydown', closeW);
+    return () => {
+      document.removeEventListener('keydown', closeW);
+    };
+  }, [closeW]);
 
-  render() {
-    return (
-      <div className={css.Overlay} onClick={this.props.closeW}>
-        <div className={css.Modal}>
-          <img src={this.props.url} alt="" />
-        </div>
+  return (
+    <div className={css.Overlay} onClick={closeW}>
+      <div className={css.Modal}>
+        <img src={url} alt="" />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+export default ModalW;
